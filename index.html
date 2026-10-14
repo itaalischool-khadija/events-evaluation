@@ -26,7 +26,7 @@
         body {
             background-color: var(--bg);
             color: var(--text-dark);
-            padding: 15px;
+            padding: 20px 15px;
             display: flex;
             justify-content: center;
         }
@@ -81,6 +81,19 @@
             text-align: center;
             padding: 0 20px;
             line-height: 1.5;
+        }
+
+        /* بطاقة التوثيق الإداري */
+        .admin-card {
+            margin: 16px 20px 5px;
+            padding: 14px 18px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            text-align: center;
+            font-size: 0.93rem;
+            color: #1e293b;
+            line-height: 2.1;
         }
 
         /* تنبيه إرشادي */
@@ -163,7 +176,7 @@
             margin-right: 2px;
         }
 
-        /* حقول الإدخال النصية */
+        /* حقول الإدخال */
         .input-control {
             width: 100%;
             padding: 10px 14px;
@@ -216,7 +229,6 @@
             font-weight: bold;
         }
 
-        /* للشاشات الصغيرة */
         @media (max-width: 520px) {
             .rating-options {
                 grid-template-columns: 1fr;
@@ -261,19 +273,19 @@
 <body>
 
 <div class="container">
-    <!-- ترويسة المدرسة (ارفعي الصورة بجانب ملف index.html بنفس هذا الاسم) -->
+    <!-- صورة الترويسة المدرسية -->
     <div class="header-banner">
         <img src="school-header.jpg" alt="الترويسة الرسمية للمدرسة" onerror="this.style.display='none'">
     </div>
 
-   <div class="title-section">
+    <div class="title-section">
         <h1 class="main-title">استمارة تقييم الفعاليات المدرسية</h1>
         <div class="divider"></div>
         <p class="event-desc">رأيك يساهم في تطوير فعالياتنا وتحسين جودتها</p>
     </div>
 
-    <!-- بطاقة الاعتماد والتوثيق الرسمي -->
-    <div style="margin: 18px 20px 8px; padding: 14px 18px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; text-align: center; font-size: 0.93rem; color: #1e293b; line-height: 2.1; box-shadow: 0 1px 3px rgba(0,0,0,0.03);">
+    <!-- بطاقة التوثيق والاعتماد -->
+    <div class="admin-card">
         <div><strong>إعداد وتنسيق:</strong> أ. خديجة الشغل</div>
         <div><strong>المديرات المساعدات:</strong> أ. زينب حمزة - أ. أمينة المخلوق - أ. سارة حافظ</div>
         <div><strong>مديرة المدرسة:</strong> أ. بدرية الرويعي</div>
@@ -282,14 +294,9 @@
     <div class="notice-card">
         يرجى اختيار الإجابة المناسبة لكل عبارة بموضوعية ودقة.
     </div>
-    </div>
-
-    <div class="notice-card">
-        يرجى اختيار الإجابة المناسبة لكل عبارة بموضوعية ودقة.
-    </div>
 
     <form id="evaluationForm">
-        <!-- البيانات الأولية -->
+        <!-- البيانات الأساسية -->
         <div class="section-header">البيانات الأساسية</div>
 
         <div class="question-card">
@@ -306,7 +313,7 @@
             <input type="text" name="eventName" class="input-control" placeholder="اكتبي عنوان أو موضوع الفعالية" required>
         </div>
 
-        <!-- عبارات التقييم -->
+        <!-- محاور التقييم -->
         <div class="section-header">محاور التقييم</div>
 
         <!-- السؤال 1 -->
@@ -428,8 +435,8 @@
 </div>
 
 <script>
-    // ضعي رابط Google Apps Script الخاص بكِ هنا
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzwcsSZpkDqehhbq7CfFCg4tJ8uX9r3U9O5sSx1OlmVkbnVwNZxXI9Wjm02iy8_UaZM3w/exec";
+    // تأكدي من وضع رابط Google Apps Script الخاص بكِ هنا
+    const SCRIPT_URL = "ضع_هنا_رابط_الويب_المستخرج_من_Apps_Script";
 
     const form = document.getElementById('evaluationForm');
     const btn = document.getElementById('submitBtn');
@@ -456,7 +463,6 @@
             btn.style.display = 'none';
         })
         .catch(() => {
-            // للتأكد من وصول البيانات حتى مع اختلاف بروتوكول CORS في بعض المتصفحات
             statusMsg.style.display = 'block';
             statusMsg.style.background = '#dcfce7';
             statusMsg.style.color = '#15803d';
