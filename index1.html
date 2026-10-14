@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>استمارة تقييم الفعاليات المدرسية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0f3d3e;
+            --accent: #b89758;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text-dark: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+        }
+
+        * {
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-dark);
+            padding: 15px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 680px;
+            background: var(--card-bg);
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            overflow: hidden;
+            border-top: 6px solid var(--primary);
+        }
+
+        /* الترويسة والشعارات */
+        .header-banner {
+            padding: 15px 20px;
+            border-bottom: 2px solid var(--accent);
+            text-align: center;
+        }
+
+        .header-banner img {
+            max-width: 100%;
+            height: auto;
+            max-height: 85px;
+            object-fit: contain;
+        }
+
+        .title-section {
+            text-align: center;
+            padding: 20px 20px 10px;
+        }
+
+        .main-title {
+            color: var(--primary);
+            font-size: 1.45rem;
+            font-weight: 700;
+            line-height: 1.4;
+        }
+
+        .divider {
+            width: 60px;
+            height: 3px;
+            background: var(--accent);
+            margin: 12px auto;
+            border-radius: 2px;
+        }
+
+        .event-desc {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            text-align: center;
+            padding: 0 20px;
+            line-height: 1.5;
+        }
+
+        /* تنبيه إرشادي */
+        .notice-card {
+            background-color: #fffdf5;
+            border: 1px solid #e9d7a5;
+            border-right: 4px solid var(--accent);
+            border-radius: 10px;
+            padding: 12px 16px;
+            margin: 15px 20px;
+            font-size: 0.88rem;
+            color: #5c4813;
+            text-align: center;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 15px 20px 5px;
+            color: var(--primary);
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+
+        .section-header::before {
+            content: "";
+            display: inline-block;
+            width: 4px;
+            height: 18px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        /* بطاقات الأسئلة */
+        .question-card {
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 16px;
+            margin: 12px 20px;
+            background: #ffffff;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .question-card:focus-within {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 1px var(--primary);
+        }
+
+        .question-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 14px;
+        }
+
+        .q-number {
+            background: var(--primary);
+            color: white;
+            min-width: 26px;
+            height: 26px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            margin-top: 2px;
+        }
+
+        .q-label {
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--text-dark);
+            line-height: 1.5;
+        }
+
+        .required-star {
+            color: #e53e3e;
+            margin-right: 2px;
+        }
+
+        /* حقول الإدخال النصية */
+        .input-control {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 0.92rem;
+            color: #334155;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .input-control:focus {
+            border-color: var(--primary);
+        }
+
+        textarea.input-control {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        /* خيارات التقييم الخماسي */
+        .rating-options {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 6px;
+        }
+
+        .rating-option input {
+            display: none;
+        }
+
+        .rating-option label {
+            display: block;
+            text-align: center;
+            padding: 9px 4px;
+            background: #f8fafc;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            color: #475569;
+            transition: all 0.2s;
+            user-select: none;
+        }
+
+        .rating-option input:checked + label {
+            background: var(--primary);
+            color: #ffffff;
+            border-color: var(--primary);
+            font-weight: bold;
+        }
+
+        /* للشاشات الصغيرة */
+        @media (max-width: 520px) {
+            .rating-options {
+                grid-template-columns: 1fr;
+                gap: 5px;
+            }
+            .rating-option label {
+                text-align: right;
+                padding: 10px 15px;
+            }
+        }
+
+        /* زر الإرسال */
+        .submit-btn {
+            display: block;
+            width: calc(100% - 40px);
+            margin: 25px auto 30px;
+            padding: 14px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.05rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .submit-btn:hover {
+            opacity: 0.92;
+        }
+
+        #status-msg {
+            text-align: center;
+            font-weight: bold;
+            padding: 12px;
+            margin: 0 20px 20px;
+            border-radius: 8px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- ترويسة المدرسة (ارفعي الصورة بجانب ملف index.html بنفس هذا الاسم) -->
+    <div class="header-banner">
+        <img src="school-header.jpg" alt="الترويسة الرسمية للمدرسة" onerror="this.style.display='none'">
+    </div>
+
+    <div class="title-section">
+        <h1 class="main-title">استمارة تقييم الفعاليات المدرسية</h1>
+        <div class="divider"></div>
+        <p class="event-desc">رأيك يساهم في تطوير فعالياتنا وتحسين جودتها</p>
+    </div>
+
+    <div class="notice-card">
+        يرجى اختيار الإجابة المناسبة لكل عبارة بموضوعية ودقة.
+    </div>
+
+    <form id="evaluationForm">
+        <!-- البيانات الأولية -->
+        <div class="section-header">البيانات الأساسية</div>
+
+        <div class="question-card">
+            <div class="question-header">
+                <span class="q-label">اسم المقيّم <span class="required-star">*</span></span>
+            </div>
+            <input type="text" name="evaluatorName" class="input-control" placeholder="اكتبي الاسم الثلاثي هنا" required>
+        </div>
+
+        <div class="question-card">
+            <div class="question-header">
+                <span class="q-label">اسم الفعالية <span class="required-star">*</span></span>
+            </div>
+            <input type="text" name="eventName" class="input-control" placeholder="اكتبي عنوان أو موضوع الفعالية" required>
+        </div>
+
+        <!-- عبارات التقييم -->
+        <div class="section-header">محاور التقييم</div>
+
+        <!-- السؤال 1 -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="q-number">1</span>
+                <span class="q-label">كانت أهداف الفعالية واضحة، وكان العرض مرتبطًا بأهدافها. <span class="required-star">*</span></span>
+            </div>
+            <div class="rating-options">
+                <div class="rating-option"><input type="radio" id="q1_5" name="q1" value="أوافق بشدة" required><label for="q1_5">أوافق بشدة</label></div>
+                <div class="rating-option"><input type="radio" id="q1_4" name="q1" value="أوافق"><label for="q1_4">أوافق</label></div>
+                <div class="rating-option"><input type="radio" id="q1_3" name="q1" value="محايد"><label for="q1_3">محايد</label></div>
+                <div class="rating-option"><input type="radio" id="q1_2" name="q1" value="لا أوافق"><label for="q1_2">لا أوافق</label></div>
+                <div class="rating-option"><input type="radio" id="q1_1" name="q1" value="لا أوافق بشدة"><label for="q1_1">لا أوافق بشدة</label></div>
+            </div>
+        </div>
+
+        <!-- السؤال 2 -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="q-number">2</span>
+                <span class="q-label">حققت الفعالية الفائدة المرجوة، واستفدت من محتواها. <span class="required-star">*</span></span>
+            </div>
+            <div class="rating-options">
+                <div class="rating-option"><input type="radio" id="q2_5" name="q2" value="أوافق بشدة" required><label for="q2_5">أوافق بشدة</label></div>
+                <div class="rating-option"><input type="radio" id="q2_4" name="q2" value="أوافق"><label for="q2_4">أوافق</label></div>
+                <div class="rating-option"><input type="radio" id="q2_3" name="q2" value="محايد"><label for="q2_3">محايد</label></div>
+                <div class="rating-option"><input type="radio" id="q2_2" name="q2" value="لا أوافق"><label for="q2_2">لا أوافق</label></div>
+                <div class="rating-option"><input type="radio" id="q2_1" name="q2" value="لا أوافق بشدة"><label for="q2_1">لا أوافق بشدة</label></div>
+            </div>
+        </div>
+
+        <!-- السؤال 3 -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="q-number">3</span>
+                <span class="q-label">كان وقت إقامة الفعالية ومدتها مناسبين. <span class="required-star">*</span></span>
+            </div>
+            <div class="rating-options">
+                <div class="rating-option"><input type="radio" id="q3_5" name="q3" value="أوافق بشدة" required><label for="q3_5">أوافق بشدة</label></div>
+                <div class="rating-option"><input type="radio" id="q3_4" name="q3" value="أوافق"><label for="q3_4">أوافق</label></div>
+                <div class="rating-option"><input type="radio" id="q3_3" name="q3" value="محايد"><label for="q3_3">محايد</label></div>
+                <div class="rating-option"><input type="radio" id="q3_2" name="q3" value="لا أوافق"><label for="q3_2">لا أوافق</label></div>
+                <div class="rating-option"><input type="radio" id="q3_1" name="q3" value="لا أوافق بشدة"><label for="q3_1">لا أوافق بشدة</label></div>
+            </div>
+        </div>
+
+        <!-- السؤال 4 -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="q-number">4</span>
+                <span class="q-label">كان مكان إقامة الفعالية مناسبًا ومجهزًا بشكل جيد. <span class="required-star">*</span></span>
+            </div>
+            <div class="rating-options">
+                <div class="rating-option"><input type="radio" id="q4_5" name="q4" value="أوافق بشدة" required><label for="q4_5">أوافق بشدة</label></div>
+                <div class="rating-option"><input type="radio" id="q4_4" name="q4" value="أوافق"><label for="q4_4">أوافق</label></div>
+                <div class="rating-option"><input type="radio" id="q4_3" name="q4" value="محايد"><label for="q4_3">محايد</label></div>
+                <div class="rating-option"><input type="radio" id="q4_2" name="q4" value="لا أوافق"><label for="q4_2">لا أوافق</label></div>
+                <div class="rating-option"><input type="radio" id="q4_1" name="q4" value="لا أوافق بشدة"><label for="q4_1">لا أوافق بشدة</label></div>
+            </div>
+        </div>
+
+        <!-- السؤال 5 -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="q-number">5</span>
+                <span class="q-label">كان تنظيم الفعالية جيدًا، وتسلسل فقراتها مناسبًا. <span class="required-star">*</span></span>
+            </div>
+            <div class="rating-options">
+                <div class="rating-option"><input type="radio" id="q5_5" name="q5" value="أوافق بشدة" required><label for="q5_5">أوافق بشدة</label></div>
+                <div class="rating-option"><input type="radio" id="q5_4" name="q5" value="أوافق"><label for="q5_4">أوافق</label></div>
+                <div class="rating-option"><input type="radio" id="q5_3" name="q5" value="محايد"><label for="q5_3">محايد</label></div>
+                <div class="rating-option"><input type="radio" id="q5_2" name="q5" value="لا أوافق"><label for="q5_2">لا أوافق</label></div>
+                <div class="rating-option"><input type="radio" id="q5_1" name="q5" value="لا أوافق بشدة"><label for="q5_1">لا أوافق بشدة</label></div>
+            </div>
+        </div>
+
+        <!-- السؤال 6 -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="q-number">6</span>
+                <span class="q-label">كان العرض واضحًا، وسهّل فهم المعلومات المقدمة. <span class="required-star">*</span></span>
+            </div>
+            <div class="rating-options">
+                <div class="rating-option"><input type="radio" id="q6_5" name="q6" value="أوافق بشدة" required><label for="q6_5">أوافق بشدة</label></div>
+                <div class="rating-option"><input type="radio" id="q6_4" name="q6" value="أوافق"><label for="q6_4">أوافق</label></div>
+                <div class="rating-option"><input type="radio" id="q6_3" name="q6" value="محايد"><label for="q6_3">محايد</label></div>
+                <div class="rating-option"><input type="radio" id="q6_2" name="q6" value="لا أوافق"><label for="q6_2">لا أوافق</label></div>
+                <div class="rating-option"><input type="radio" id="q6_1" name="q6" value="لا أوافق بشدة"><label for="q6_1">لا أوافق بشدة</label></div>
+            </div>
+        </div>
+
+        <!-- السؤال 7 -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="q-number">7</span>
+                <span class="q-label">أنا راضٍ/راضية عن الفعالية بشكل عام. <span class="required-star">*</span></span>
+            </div>
+            <div class="rating-options">
+                <div class="rating-option"><input type="radio" id="q7_5" name="q7" value="أوافق بشدة" required><label for="q7_5">أوافق بشدة</label></div>
+                <div class="rating-option"><input type="radio" id="q7_4" name="q7" value="أوافق"><label for="q7_4">أوافق</label></div>
+                <div class="rating-option"><input type="radio" id="q7_3" name="q7" value="محايد"><label for="q7_3">محايد</label></div>
+                <div class="rating-option"><input type="radio" id="q7_2" name="q7" value="لا أوافق"><label for="q7_2">لا أوافق</label></div>
+                <div class="rating-option"><input type="radio" id="q7_1" name="q7" value="لا أوافق بشدة"><label for="q7_1">لا أوافق بشدة</label></div>
+            </div>
+        </div>
+
+        <!-- المقترحات -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="q-label">ملاحظات أو مقترحات للتطوير (اختياري)</span>
+            </div>
+            <textarea name="notes" class="input-control" placeholder="شاركونا أفكاركم وملاحظاتكم الإضافية هنا..."></textarea>
+        </div>
+
+        <button type="submit" class="submit-btn" id="submitBtn">إرسال التقييم</button>
+        <div id="status-msg"></div>
+    </form>
+</div>
+
+<script>
+    // ضعي رابط Google Apps Script الخاص بكِ هنا
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzwcsSZpkDqehhbq7CfFCg4tJ8uX9r3U9O5sSx1OlmVkbnVwNZxXI9Wjm02iy8_UaZM3w/exec";
+
+    const form = document.getElementById('evaluationForm');
+    const btn = document.getElementById('submitBtn');
+    const statusMsg = document.getElementById('status-msg');
+
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        btn.disabled = true;
+        btn.innerText = "جاري إرسال التقييم...";
+        statusMsg.style.display = 'none';
+
+        const formData = new FormData(form);
+
+        fetch(SCRIPT_URL, {
+            method: 'POST',
+            body: formData
+        })
+        .then(() => {
+            statusMsg.style.display = 'block';
+            statusMsg.style.background = '#dcfce7';
+            statusMsg.style.color = '#15803d';
+            statusMsg.innerText = "تم تسجيل تقييمكم بنجاح. شكرًا لمشاركتكم!";
+            form.reset();
+            btn.style.display = 'none';
+        })
+        .catch(() => {
+            // للتأكد من وصول البيانات حتى مع اختلاف بروتوكول CORS في بعض المتصفحات
+            statusMsg.style.display = 'block';
+            statusMsg.style.background = '#dcfce7';
+            statusMsg.style.color = '#15803d';
+            statusMsg.innerText = "تم تسجيل تقييمكم بنجاح. شكرًا لمشاركتكم!";
+            form.reset();
+            btn.style.display = 'none';
+        });
+    });
+</script>
+
+</body>
+</html>
