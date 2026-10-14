@@ -299,13 +299,15 @@
         <!-- البيانات الأساسية -->
         <div class="section-header">البيانات الأساسية</div>
 
+        <!-- حقل اسم المقيّم (اختياري) -->
         <div class="question-card">
             <div class="question-header">
-                <span class="q-label">اسم المقيّم <span class="required-star">*</span></span>
+                <span class="q-label">اسم المقيّم (اختياري)</span>
             </div>
-            <input type="text" name="evaluatorName" class="input-control" placeholder="اكتبي الاسم الثلاثي هنا" required>
+            <input type="text" name="evaluatorName" class="input-control" placeholder="اكتبي الاسم الثلاثي هنا (أو اتركيه فارغاً)">
         </div>
 
+        <!-- حقل اسم الفعالية (إجباري) -->
         <div class="question-card">
             <div class="question-header">
                 <span class="q-label">اسم الفعالية <span class="required-star">*</span></span>
@@ -435,8 +437,8 @@
 </div>
 
 <script>
-    // تأكدي من وضع رابط Google Apps Script الخاص بكِ هنا
-    const SCRIPT_URL = "ضع_هنا_رابط_الويب_المستخرج_من_Apps_Script";
+    // ضعي رابط Google Apps Script الخاص بكِ هنا
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzwcsSZpkDqehhbq7CfFCg4tJ8uX9r3U9O5sSx1OlmVkbnVwNZxXI9Wjm02iy8_UaZM3w/exec";
 
     const form = document.getElementById('evaluationForm');
     const btn = document.getElementById('submitBtn');
